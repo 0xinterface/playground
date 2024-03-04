@@ -1,0 +1,16 @@
+name: "testing worfklow mechanism"
+
+on:
+  workflow_dispatch:
+    inputs:
+      cf_dns_token:
+        required: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: "testing"
+    steps:
+      - run: echo ${{ github.event_name }}
+      - run: echo ${{ github.event.inputs.cf_dns_token }}
+      - run: echo ${{ secrets[github.event.inputs.cf_dns_token] }}
