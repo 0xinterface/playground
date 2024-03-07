@@ -13,5 +13,12 @@ jobs:
     steps:
       - name: Get idtoken
         run: |
-          OIDC_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.narwhl.workers.dev" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN")
+          OIDC_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.narwhl.workers.dev" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" | jq -r '.value')
           echo $OIDC_TOKEN
+          jwtd() {
+            if [[ -x $(command -v jq) ]]; then
+                jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' <<< "${1}"
+                echo "Signature: $(echo "${1}" | awk -F'.' '{print $3}')"
+            fi
+          }
+          jwtd $OIDC_TOKEN
