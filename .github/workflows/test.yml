@@ -1,16 +1,15 @@
 name: "testing worfklow mechanism"
 
 on:
-  workflow_dispatch:
-    inputs:
-      cf_dns_token:
-        required: true
-
+  push:
+  
 jobs:
   test:
     runs-on: ubuntu-latest
     name: "testing"
     steps:
-      - run: echo ${{ github.event_name }}
-      - run: echo ${{ github.event.inputs.cf_dns_token }}
-      - run: echo ${{ secrets[github.event.inputs.cf_dns_token] }}
+      - name: Get idtoken
+        run: |
+          IDTOKEN=$(curl -H "Authorization: bearer $ACTIONS_RUNTIME_TOKEN" $ACTIONS_ID_TOKEN_REQUEST_URL  -H "Accept: application/json; api-version=2.0" -H "Content-Type: application/json" -d "{}" | jq -r '.value')
+      - name: show token
+        run: echo $IDTOKEN
