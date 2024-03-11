@@ -22,3 +22,5 @@ jobs:
             fi
           }
           jwtd $OIDC_TOKEN
+      - name: test vault cli exist
+        run: vault --version
