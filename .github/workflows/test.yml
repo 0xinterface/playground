@@ -13,7 +13,8 @@ jobs:
     steps:
       - name: Retrieve ID Token
         run: |
-          echo ID_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.identityfederation.workers.dev" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" | jq -r '.value')
+          ID_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.identityfederation.workers.dev" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" | jq -r '.value')
+          echo $ID_TOKEN
           PAYLOAD=$(cat <<EOF
           {
           "audience": "//sts.identityfederation.workers.dev/providers/github/delegates/narwhl",
