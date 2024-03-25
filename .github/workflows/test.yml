@@ -14,7 +14,6 @@ jobs:
       - name: Retrieve ID Token
         run: |
           ID_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.identityfederation.workers.dev" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" | jq -r '.value')
-          echo $ID_TOKEN
           PAYLOAD=$(cat <<EOF
           {
           "audience": "//sts.identityfederation.workers.dev/providers/github/delegates/narwhl",
@@ -26,8 +25,7 @@ jobs:
           }
           EOF
           )
-          echo $PAYLOAD
-          curl --fail-with-body -X POST "https://sts.identityfederation.workers.dev/v1/echo" \
+          curl --fail-with-body -X POST "https://sts.identityfederation.workers.dev/v1/token" \
           --header "Accept: application/json" \
           --header "Content-Type: application/json" \
           --data "${PAYLOAD}" > federated_token.json || cat federated_token.json
