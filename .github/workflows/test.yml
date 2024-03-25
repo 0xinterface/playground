@@ -26,6 +26,7 @@ jobs:
           "subjectToken": "${ID_TOKEN}"
           }
           EOF
+          )
       - name: Send request to endpoint
         run: |
           curl --fail-with-body -X POST "https://sts.identityfederation.workers.dev/v1/token" \
