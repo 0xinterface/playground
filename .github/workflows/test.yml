@@ -9,7 +9,7 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    name: "testing"
+    name: testing
     steps:
       - name: Retrieve ID Token
         run: |
