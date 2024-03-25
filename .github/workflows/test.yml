@@ -27,12 +27,11 @@ jobs:
           EOF
           )
           echo $PAYLOAD
-          curl --fail-with-body -X POST "https://sts.identityfederation.workers.dev/v1/token" \
+          curl --fail-with-body -X POST "https://sts.identityfederation.workers.dev/v1/echo" \
           --header "Accept: application/json" \
           --header "Content-Type: application/json" \
           --data "${PAYLOAD}" > federated_token.json || cat federated_token.json
       - name: Set token to environment variable
         run: | 
-          FEDERATED_TOKEN=$(jq -r '.access_token' federated_token.json)
-          echo $FEDERATED_TOKEN
+          echo federated_token.json
 
