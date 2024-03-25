@@ -33,5 +33,5 @@ jobs:
           --data "${PAYLOAD}" > federated_token.json || cat federated_token.json
       - name: Set token to environment variable
         run: | 
-          echo federated_token.json
+          cat federated_token.json
 
