@@ -25,6 +25,7 @@ jobs:
           }
           EOF
           )
+          echo $PAYLOAD
           curl --fail-with-body -X POST "https://sts.identityfederation.workers.dev/v1/token" \
           --header "Accept: application/json" \
           --header "Content-Type: application/json" \
