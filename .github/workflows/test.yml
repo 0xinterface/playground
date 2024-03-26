@@ -14,5 +14,8 @@ jobs:
       - name: Retrieve ID Token
         run: |
           OIDC_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.narwhl.workers.dev" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" | jq -r '.value')
-          echo $OIDC_TOKEN | jq -R 'split(".") | .[1] | @base64d | fromjson' | jq -r '.jti'
+          echo "TOKEN_ID=$(echo $OIDC_TOKEN | jq -R 'split(".") | .[1] | @base64d | fromjson' | jq -r '.jti')" >> $GITHUB_ENV
+      - name: Test
+        run: |
+          echo $TOKEN_ID
 
